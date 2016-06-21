@@ -15,6 +15,17 @@ class JobsSorter
     return jobs_hash
   end
 
+  def sort!
+    if @jobs_hash.empty?
+      @results = []
+    elsif @jobs_hash.values.reject(&:empty?).empty?
+      @results = @jobs_hash.keys
+    else
+
+    end
+    @results
+  end
+
   private
 
   def has_self_dependency?(jobs_hash)
