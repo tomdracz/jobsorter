@@ -35,7 +35,7 @@ describe JobsSorter do
         expect(jobs_sorter.results).to eql(["a"])
       end
 
-      it "should have one element" do
+      it "should have one element in results" do
         expect(jobs_sorter.results.size).to eql(1)
       end
     end
@@ -47,8 +47,32 @@ describe JobsSorter do
         expect(jobs_sorter.results).to eql(["a", "b", "c"])
       end
 
-      it "should have 3 elements" do
+      it "should have 3 elements in results" do
         expect(jobs_sorter.results.size).to eql(3)
+      end
+    end
+
+    context "when given a list of three jobs with one dependency" do
+      let(:jobs) { "a =>  b => c c =>"  }
+
+      it "returns an array with three jobs in a correct order" do
+        expect(jobs_sorter.results).to eql(["a", "c", "b"])
+      end
+
+      it "should have 3 elements in results" do
+        expect(jobs_sorter.results.size).to eql(3)
+      end
+    end
+
+    context "when given a list of six jobs with multiple dependencies" do
+      let(:jobs) { "a =>  b => c c => f d => a e => b f =>"  }
+
+      it "returns an array with six jobs in a correct order" do
+        expect(jobs_sorter.results).to eql(["a", "f", "c", "b", "d", "e"])
+      end
+
+      it "should have 6 elements in results" do
+        expect(jobs_sorter.results.size).to eql(6)
       end
     end
   end
