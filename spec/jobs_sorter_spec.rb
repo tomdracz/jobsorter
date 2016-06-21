@@ -11,7 +11,7 @@ describe JobsSorter do
     end
   end
 
-  describe "jobs sorting" do
+  describe "#sort" do
     before(:each) do
       jobs_sorter.sort
     end
