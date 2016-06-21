@@ -13,7 +13,7 @@ describe JobsSorter do
 
   describe "jobs sorting" do
     before(:each) do
-      jobs_sorter.sort!
+      jobs_sorter.sort
     end
 
     context "when given an empty string" do

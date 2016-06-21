@@ -15,7 +15,7 @@ class JobsSorter
     return jobs_hash
   end
 
-  def sort!
+  def sort
     if @jobs_hash.empty?
       @results = []
     elsif @jobs_hash.values.reject(&:empty?).empty?
