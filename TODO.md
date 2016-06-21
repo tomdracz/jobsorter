@@ -1,0 +1,5 @@
+- Create JobsSorter class
+- Initialize the class with string of jobs
+- Parse the jobs into hash for ease of access
+- Sort the hash putting the sorted values into array
+- Check for invalid dependencies
