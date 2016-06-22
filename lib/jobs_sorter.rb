@@ -1,3 +1,13 @@
+require 'tsort'
+
+class Hash
+  include TSort
+  alias tsort_each_node each_key
+  def tsort_each_child(node, &block)
+    fetch(node).instance_eval(&block) if has_key?(node)
+  end
+end
+
 class JobsSorter
   class SelfDependencyError < StandardError
   end
@@ -21,7 +31,7 @@ class JobsSorter
     elsif @jobs_hash.values.reject(&:empty?).empty?
       @results = @jobs_hash.keys
     else
-
+      @results = @jobs_hash.tsort.reject(&:empty?)
     end
     @results
   end
