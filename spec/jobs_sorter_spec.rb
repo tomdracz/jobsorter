@@ -41,7 +41,7 @@ describe JobsSorter do
     end
 
     context "when given a list of three jobs without dependencies" do
-      let(:jobs) { "a =>  b =>  c =>"  }
+      let(:jobs) { "a =>  b =>  c =>" }
 
       it "returns an array with three jobs" do
         expect(jobs_sorter.results).to eql(["a", "b", "c"])
@@ -53,7 +53,7 @@ describe JobsSorter do
     end
 
     context "when given a list of three jobs with one dependency" do
-      let(:jobs) { "a =>  b => c c =>"  }
+      let(:jobs) { "a =>  b => c c =>" }
 
       it "returns an array with three jobs in a correct order" do
         expect(jobs_sorter.results).to eql(["a", "c", "b"])
@@ -65,7 +65,7 @@ describe JobsSorter do
     end
 
     context "when given a list of six jobs with multiple dependencies" do
-      let(:jobs) { "a =>  b => c c => f d => a e => b f =>"  }
+      let(:jobs) { "a =>  b => c c => f d => a e => b f =>" }
 
       it "returns an array with six jobs in a correct order" do
         expect(jobs_sorter.results).to eql(["a", "f", "c", "b", "d", "e"])
@@ -79,10 +79,18 @@ describe JobsSorter do
 
   describe "dependency errors" do
     context "when given a string with self dependency error" do
-      let(:jobs) { "a => b c => c"}
+      let(:jobs) { "a => b c => c" }
 
       it "raises a self dependency error" do
         expect{jobs_sorter}.to raise_error(JobsSorter::SelfDependencyError)
+      end
+    end
+
+    context "when given a string with cyclic dependency error" do
+      let(:jobs) { "a =>  b => c c => f d => a e =>  f => b" }
+
+      it "raises a cyclic dependency error" do
+        expect{jobs_sorter.sort}.to raise_error(TSort::Cyclic)
       end
     end
   end
